@@ -1,0 +1,8 @@
+services:
+ backend:
+  bulid: ./Backend
+  ports:
+    - "3000:3000"
+  volumes:
+    - ./Backend:/app
+  command: npx nodemon -L server.js
