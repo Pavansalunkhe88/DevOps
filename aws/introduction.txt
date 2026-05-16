@@ -1,0 +1,433 @@
+===============================
+AWS INTRODUCTION AND SERVICES
+===============================
+
+1. WHAT IS AWS?
+----------------
+AWS (Amazon Web Services) is a cloud computing platform provided by Amazon.
+
+It provides:
+- Virtual servers
+- Storage
+- Databases
+- Networking
+- Security
+- AI/ML services
+- Monitoring tools
+
+Instead of buying physical hardware, users can rent cloud resources from AWS.
+
+--------------------------------------------------
+
+2. ADVANTAGES OF AWS
+---------------------
+- Pay as you use
+- Highly scalable
+- Secure infrastructure
+- Fast deployment
+- Global availability
+- Backup and recovery
+- High performance
+
+--------------------------------------------------
+
+3. TYPES OF CLOUD SERVICES
+---------------------------
+
+A) IaaS (Infrastructure as a Service)
+- Provides virtual infrastructure.
+Examples:
+- EC2
+- VPC
+- EBS
+
+B) PaaS (Platform as a Service)
+- Provides platform to develop applications.
+Examples:
+- Elastic Beanstalk
+- AWS Lambda
+
+C) SaaS (Software as a Service)
+- Ready-to-use software over internet.
+Examples:
+- Gmail
+- Office 365
+
+==================================================
+AWS SERVICES
+==================================================
+
+1. COMPUTE SERVICES
+--------------------
+
+A) EC2 (Elastic Compute Cloud)
+- Virtual server in cloud.
+Uses:
+- Hosting websites
+- Running applications
+- Backend servers
+
+Features:
+- Scalable
+- Secure
+- Multiple OS support
+
+--------------------------------
+
+B) AWS Lambda
+- Serverless computing service.
+- Runs code without managing servers.
+
+Advantages:
+- Auto scaling
+- Pay per execution
+- No server maintenance
+
+--------------------------------
+
+C) Elastic Beanstalk
+- Easy deployment service for web applications.
+
+Supports:
+- Java
+- Python
+- Node.js
+- PHP
+
+==================================================
+
+2. STORAGE SERVICES
+--------------------
+
+A) S3 (Simple Storage Service)
+- Object storage service.
+
+Used for:
+- Images
+- Videos
+- Backups
+- Static websites
+
+Features:
+- Unlimited storage
+- High durability
+- Secure
+
+--------------------------------
+
+B) EBS (Elastic Block Store)
+- Storage attached to EC2.
+- Works like hard disk.
+
+--------------------------------
+
+C) EFS (Elastic File System)
+- Shared file storage for multiple EC2 instances.
+
+==================================================
+
+3. DATABASE SERVICES
+---------------------
+
+A) RDS (Relational Database Service)
+- Managed SQL database service.
+
+Supports:
+- MySQL
+- PostgreSQL
+- MariaDB
+- Oracle
+
+Advantages:
+- Automatic backup
+- Scaling
+- Security
+
+--------------------------------
+
+B) DynamoDB
+- NoSQL database service.
+- Fast and scalable.
+
+==================================================
+
+4. NETWORKING SERVICES
+-----------------------
+
+A) VPC (Virtual Private Cloud)
+- Private network inside AWS.
+- Used to create:
+  - Subnets
+  - Route tables
+  - Security groups
+
+--------------------------------
+
+B) Route 53
+- DNS service.
+- Connects domain names to servers.
+
+Example:
+google.com -> server IP
+
+--------------------------------
+
+C) CloudFront
+- Content Delivery Network (CDN).
+- Improves website speed globally.
+
+==================================================
+
+5. SECURITY SERVICES
+---------------------
+
+A) IAM (Identity and Access Management)
+- Manages users, roles, and permissions.
+
+Example:
+Developer can access EC2 but not billing.
+
+--------------------------------
+
+B) Security Group
+- Firewall for EC2 instances.
+- Controls inbound and outbound traffic.
+
+--------------------------------
+
+C) NACL (Network ACL)
+- Subnet-level firewall.
+
+==================================================
+
+6. MONITORING SERVICES
+-----------------------
+
+A) CloudWatch
+- Monitors:
+  - CPU usage
+  - Logs
+  - Performance
+  - Memory
+
+Can create alarms.
+
+--------------------------------
+
+B) CloudTrail
+- Tracks AWS account activity.
+- Used for auditing and security.
+
+==================================================
+
+7. DEVOPS SERVICES
+-------------------
+
+A) CodeCommit
+- Git repository service.
+
+B) CodeBuild
+- Build automation service.
+
+C) CodeDeploy
+- Deployment automation service.
+
+D) CodePipeline
+- CI/CD pipeline service.
+
+==================================================
+AWS GLOBAL INFRASTRUCTURE
+==================================================
+
+1. Region
+-----------
+Geographical area where AWS data centers exist.
+
+Examples:
+- Mumbai
+- Singapore
+- US-East
+
+--------------------------------
+
+2. Availability Zone (AZ)
+--------------------------
+Separate data centers inside a region.
+
+Provides:
+- High availability
+- Fault tolerance
+
+==================================================
+VPC CONCEPT
+==================================================
+
+1. WHAT IS VPC?
+----------------
+VPC (Virtual Private Cloud) is a private virtual network inside AWS.
+
+You control:
+- IP addresses
+- Routing
+- Subnets
+- Security
+
+Think of VPC as your own private cloud network.
+
+==================================================
+
+2. COMPONENTS OF VPC
+---------------------
+
+A) Subnet
+-----------
+A subnet is a smaller network inside a VPC.
+
+Types of Subnet:
+
+1. Public Subnet
+- Has internet access.
+Examples:
+- Web servers
+- Load balancers
+
+2. Private Subnet
+- No direct internet access.
+Examples:
+- Databases
+- Backend servers
+
+Example:
+VPC: 192.168.0.0/16
+
+Public Subnet:
+192.168.1.0/24
+
+Private Subnet:
+192.168.2.0/24
+
+--------------------------------
+
+B) Internet Gateway (IGW)
+--------------------------
+Allows internet access to VPC.
+
+Required for:
+- Public subnet
+
+--------------------------------
+
+C) Route Table
+---------------
+Controls traffic routing inside VPC.
+
+Example:
+Internet traffic routed to Internet Gateway.
+
+--------------------------------
+
+D) NAT Gateway
+---------------
+Allows private subnet instances to access internet securely.
+
+Used for:
+- Software updates
+- Package installation
+
+Private subnet remains hidden from internet.
+
+--------------------------------
+
+E) Security Group
+------------------
+Instance-level firewall.
+
+Controls:
+- Port
+- Protocol
+- IP addresses
+
+Example:
+Allow HTTP traffic on port 80.
+
+--------------------------------
+
+F) Network ACL (NACL)
+----------------------
+Subnet-level firewall.
+Adds extra security layer.
+
+==================================================
+VPC ARCHITECTURE EXAMPLE
+==================================================
+
+Internet
+   |
+Internet Gateway
+   |
+VPC
+ |---------------------------|
+ |                           |
+Public Subnet          Private Subnet
+ |                           |
+EC2 Web Server         Database Server
+Load Balancer          Backend Server
+
+==================================================
+DIFFERENCE BETWEEN PUBLIC AND PRIVATE SUBNET
+==================================================
+
+Public Subnet:
+- Has internet access
+- Contains web servers
+- Route to Internet Gateway exists
+
+Private Subnet:
+- No direct internet access
+- Contains databases
+- More secure
+
+==================================================
+COMMON AWS ARCHITECTURE
+==================================================
+
+Users
+  |
+Route 53
+  |
+Load Balancer
+  |
+EC2 Web Servers (Public Subnet)
+  |
+Application Servers (Private Subnet)
+  |
+RDS Database (Private Subnet)
+
+==================================================
+IMPORTANT AWS INTERVIEW QUESTIONS
+==================================================
+
+1. What is AWS?
+2. What is EC2?
+3. Difference between EC2 and Lambda?
+4. What is VPC?
+5. Difference between public and private subnet?
+6. What is IAM?
+7. What is Security Group?
+8. Difference between Security Group and NACL?
+9. What is S3?
+10. What is Route 53?
+
+==================================================
+SHORT SUMMARY
+==================================================
+
+- AWS is a cloud computing platform.
+- EC2 provides virtual servers.
+- S3 provides cloud storage.
+- RDS manages databases.
+- VPC creates private networks.
+- Subnets divide VPC networks.
+- Public subnet has internet access.
+- Private subnet is secure and internal.
+- Security Groups and NACL provide security.
