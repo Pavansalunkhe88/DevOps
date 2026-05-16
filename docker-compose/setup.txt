@@ -1,0 +1,269 @@
+DOCKER COMPOSE SETUP
+FRONTEND + BACKEND + VITE PROXY
+
+==================================================
+1. PROJECT STRUCTURE
+==================================================
+
+project/
+│
+├── frontend/
+│   ├── Dockerfile
+│   ├── vite.config.js
+│   └── src/
+│
+├── backend/
+│   ├── Dockerfile
+│   ├── server.js
+│   └── package.json
+│
+└── docker-compose.yml
+
+==================================================
+2. FRONTEND VITE CONFIG
+==================================================
+
+File: frontend/vite.config.js
+
+--------------------------------------------------
+
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+export default defineConfig({
+  plugins: [react()],
+
+  server: {
+    host: '0.0.0.0',
+
+    proxy: {
+      '/api': {
+        target: 'http://backend:3000',
+        changeOrigin: true,
+        secure: false,
+      }
+    }
+  }
+})
+
+--------------------------------------------------
+
+IMPORTANT:
+
+"backend" is docker-compose service name.
+
+==================================================
+3. FRONTEND API CALL
+==================================================
+
+Use:
+
+axios.get("/api/users")
+
+DO NOT USE:
+
+axios.get("http://localhost:3000/api/users")
+
+==================================================
+4. BACKEND SERVER
+==================================================
+
+File: backend/server.js
+
+--------------------------------------------------
+
+const express = require("express");
+
+const app = express();
+
+app.get("/api/users", (req, res) => {
+    res.json([
+        { id: 1, name: "Pavan" },
+        { id: 2, name: "Rahul" }
+    ]);
+});
+
+app.listen(3000, "0.0.0.0", () => {
+    console.log("Backend running on port 3000");
+});
+
+--------------------------------------------------
+
+IMPORTANT:
+
+Use:
+0.0.0.0
+
+NOT:
+localhost
+
+==================================================
+5. FRONTEND DOCKERFILE
+==================================================
+
+File: frontend/Dockerfile
+
+--------------------------------------------------
+
+FROM node:18
+
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm install
+
+COPY . .
+
+EXPOSE 5173
+
+CMD ["npm", "run", "dev", "--", "--host"]
+
+--------------------------------------------------
+
+==================================================
+6. BACKEND DOCKERFILE
+==================================================
+
+File: backend/Dockerfile
+
+--------------------------------------------------
+
+FROM node:18
+
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm install
+
+COPY . .
+
+EXPOSE 3000
+
+CMD ["node", "server.js"]
+
+--------------------------------------------------
+
+==================================================
+7. DOCKER COMPOSE FILE
+==================================================
+
+File: docker-compose.yml
+
+--------------------------------------------------
+
+version: '3'
+
+services:
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+    depends_on:
+      - backend
+
+  backend:
+    build: ./backend
+    ports:
+      - "3000:3000"
+
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+
+--------------------------------------------------
+
+==================================================
+8. BUILD AND START CONTAINERS
+==================================================
+
+Run:
+
+docker compose up --build
+
+==================================================
+9. OPEN APPLICATION
+==================================================
+
+Frontend:
+http://localhost:5173
+
+Backend:
+http://localhost:3000/api/users
+
+==================================================
+10. HOW REQUEST WORKS
+==================================================
+
+React Frontend
+      |
+      | axios.get("/api/users")
+      ↓
+Vite Proxy
+      ↓
+http://backend:3000/api/users
+      ↓
+Backend Container
+
+==================================================
+11. COMMON ERRORS
+==================================================
+
+ERROR:
+CORS blocked
+
+CAUSE:
+Using full backend URL instead of proxy.
+
+FIX:
+Use:
+axios.get("/api/users")
+
+--------------------------------------------------
+
+ERROR:
+ECONNREFUSED
+
+CAUSE:
+Backend container not running.
+
+FIX:
+docker compose up --build
+
+--------------------------------------------------
+
+ERROR:
+backend not found
+
+CAUSE:
+Frontend not running inside docker network.
+
+FIX:
+Use docker compose.
+
+==================================================
+12. CHECK RUNNING CONTAINERS
+==================================================
+
+docker ps
+
+==================================================
+13. STOP CONTAINERS
+==================================================
+
+docker compose down
+
+==================================================
+14. REBUILD AFTER CHANGES
+==================================================
+
+docker compose up --build
+
+==================================================
