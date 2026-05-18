@@ -1,0 +1,162 @@
+```txt
+AWS ECS AND ECR
+
+1. Amazon ECS (Elastic Container Service)
+
+Amazon ECS is a container orchestration service provided by AWS.
+
+It is used to:
+- Run Docker containers
+- Manage container deployment
+- Scale applications automatically
+- Monitor running containers
+- Integrate with AWS services
+
+Think of ECS as:
+"The service that runs and manages containers."
+
+--------------------------------------------------
+
+Main Components of ECS
+
+1. Cluster
+- A logical group of resources
+- Containers run inside a cluster
+
+2. Task Definition
+- Blueprint of container configuration
+- Contains:
+  - Docker image
+  - CPU and memory
+  - Ports
+  - Environment variables
+
+3. Task
+- A running instance of a container
+
+4. Service
+- Maintains desired number of tasks
+- Provides scaling and load balancing
+
+--------------------------------------------------
+
+ECS Launch Types
+
+1. EC2 Launch Type
+- Containers run on EC2 instances
+- User manages servers
+
+2. Fargate Launch Type
+- Serverless container execution
+- No need to manage servers
+
+--------------------------------------------------
+
+2. Amazon ECR (Elastic Container Registry)
+
+Amazon ECR is a Docker container registry service.
+
+It is used to:
+- Store Docker images
+- Push and pull container images
+- Manage image versions
+- Scan images for vulnerabilities
+
+Think of ECR as:
+"A storage place for Docker images."
+
+--------------------------------------------------
+
+Features of ECR
+
+- Private image repository
+- Secure image storage
+- AWS IAM integration
+- Lifecycle policies
+- Vulnerability scanning
+
+--------------------------------------------------
+
+How ECS and ECR Work Together
+
+Step 1:
+Create application code
+
+Step 2:
+Build Docker image
+
+Command:
+docker build -t my-app .
+
+Step 3:
+Push image to ECR
+
+Step 4:
+ECS pulls image from ECR
+
+Step 5:
+ECS runs containerized application
+
+--------------------------------------------------
+
+Workflow Diagram
+
+Code
+  ↓
+Docker Build
+  ↓
+ECR (Store Image)
+  ↓
+ECS (Run Containers)
+  ↓
+Users Access Application
+
+--------------------------------------------------
+
+Advantages of ECS
+
+- Easy container management
+- Automatic scaling
+- High availability
+- AWS integration
+- Supports microservices
+
+--------------------------------------------------
+
+Advantages of ECR
+
+- Secure image storage
+- Fully managed
+- Fast image retrieval
+- Integrated with ECS and EKS
+
+--------------------------------------------------
+
+Common Use Cases
+
+- Microservices applications
+- Web applications
+- API deployment
+- CI/CD pipelines
+- Scalable cloud applications
+
+--------------------------------------------------
+
+Difference Between ECS and ECR
+
+ECS:
+- Runs and manages containers
+
+ECR:
+- Stores Docker container images
+
+--------------------------------------------------
+
+Summary
+
+ECS = Container Management Service
+ECR = Docker Image Storage Service
+
+ECR stores container images.
+ECS pulls those images and runs containers.
+```
