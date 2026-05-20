@@ -148,7 +148,7 @@ ECS:
 - Runs and manages containers
 
 ECR:
-- Stores Docker container images
+- Stores Docker container images ..
 
 --------------------------------------------------
 
