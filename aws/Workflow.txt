@@ -1,0 +1,238 @@
+```txt
+DOCKER + AWS ECR + AWS ECS WORKFLOW
+
+Overview:
+Docker → Build and package application into container
+ECR → Store Docker Images
+ECS → Run and manage containers
+
+--------------------------------------------------
+
+WORKFLOW
+
+Code
+ ↓
+Dockerfile
+ ↓
+Docker Build
+ ↓
+Docker Image
+ ↓
+Push Image to AWS ECR
+ ↓
+Create ECS Task Definition
+ ↓
+Create ECS Service
+ ↓
+Application Running
+
+--------------------------------------------------
+
+STEP 1: Create Dockerfile
+
+Example:
+
+FROM node:20
+
+WORKDIR /app
+
+COPY package*.json .
+
+RUN npm install
+
+COPY . .
+
+EXPOSE 3000
+
+CMD ["npm","start"]
+
+Build Docker Image:
+
+docker build -t my-app .
+
+Check Images:
+
+docker images
+
+--------------------------------------------------
+
+STEP 2: Create ECR Repository
+
+AWS Console
+→ ECR
+→ Create Repository
+
+Example:
+Repository Name:
+my-app
+
+--------------------------------------------------
+
+STEP 3: Configure AWS CLI
+
+Command:
+
+aws configure
+
+Enter:
+
+Access Key
+Secret Key
+Region
+Output Format
+
+--------------------------------------------------
+
+STEP 4: Login Docker to AWS ECR
+
+Command:
+
+aws ecr get-login-password \
+--region ap-south-1 \
+| docker login \
+--username AWS \
+--password-stdin \
+ACCOUNT_ID.dkr.ecr.ap-south-1.amazonaws.com
+
+--------------------------------------------------
+
+STEP 5: Tag Docker Image
+
+Command:
+
+docker tag my-app:latest \
+ACCOUNT_ID.dkr.ecr.ap-south-1.amazonaws.com/my-app
+
+--------------------------------------------------
+
+STEP 6: Push Image to ECR
+
+Command:
+
+docker push \
+ACCOUNT_ID.dkr.ecr.ap-south-1.amazonaws.com/my-app
+
+Now image is stored in ECR.
+
+Local Docker
+     ↓
+AWS ECR
+
+--------------------------------------------------
+
+STEP 7: Create ECS Cluster
+
+AWS Console
+
+ECS
+→ Create Cluster
+→ Select Fargate
+
+Example:
+
+Cluster Name:
+my-cluster
+
+--------------------------------------------------
+
+STEP 8: Create Task Definition
+
+Task Definition = Container Configuration
+
+Set:
+
+Launch Type:
+Fargate
+
+Container:
+my-app
+
+Image:
+ECR Image URL
+
+CPU:
+0.5 vCPU
+
+Memory:
+1 GB
+
+Port:
+3000
+
+--------------------------------------------------
+
+STEP 9: Create ECS Service
+
+Service manages:
+
+- Running Containers
+- Auto Restart
+- Auto Scaling
+
+Example:
+
+Desired Tasks:
+2
+
+Output:
+
+Task 1
+Task 2
+
+--------------------------------------------------
+
+STEP 10: Access Application
+
+Attach:
+
+Application Load Balancer
+
+Open:
+
+http://your-load-balancer-url
+
+Application Live
+
+--------------------------------------------------
+
+COMMAND SUMMARY
+
+# Build Image
+docker build -t my-app .
+
+# Login ECR
+aws ecr get-login-password | docker login
+
+# Tag Image
+docker tag my-app IMAGE_URL
+
+# Push Image
+docker push IMAGE_URL
+
+# Deploy
+ECS → Task → Service
+
+--------------------------------------------------
+
+REAL ARCHITECTURE
+
+Frontend / Backend
+        ↓
+Docker
+        ↓
+AWS ECR
+        ↓
+AWS ECS (Fargate)
+        ↓
+Load Balancer
+        ↓
+Users
+
+--------------------------------------------------
+
+SHORT FORM:
+
+Docker = Build Container
+ECR = Store Container
+ECS = Run Container
+```
