@@ -1,0 +1,212 @@
+MICROSERVICES ARCHITECTURE
+
+1. Introduction
+Microservices Architecture is a software architecture pattern where an application is divided into small, independent services. Each service handles a specific business function and communicates with other services using APIs.
+
+Unlike Monolithic Architecture (single application), microservices separate the application into multiple services that can be developed, deployed, and scaled independently.
+
+----------------------------------------------------
+
+2. Example
+
+E-Commerce Application
+
+- User Service
+- Product Service
+- Order Service
+- Payment Service
+- Notification Service
+- Delivery Service
+
+Each service:
+- Performs one business task
+- Has its own business logic
+- Can have its own database
+- Can be deployed separately
+
+----------------------------------------------------
+
+3. Architecture Flow
+
+Client (Web/Mobile)
+        |
+        V
+API Gateway
+        |
+-----------------------------------
+|         |         |            |
+V         V         V            V
+
+User   Product   Order      Payment
+Svc      Svc      Svc         Svc
+
+|         |         |           |
+DB        DB        DB          DB
+
+          |
+Notification Service
+
+----------------------------------------------------
+
+4. Main Components
+
+A. API Gateway
+Acts as the single entry point.
+
+Responsibilities:
+- Authentication
+- Request Routing
+- Load Balancing
+- Security
+- Rate Limiting
+
+B. Microservices
+Independent services that:
+- Run individually
+- Scale independently
+- Deploy independently
+
+Example:
+
+User Service
+- Login
+- Registration
+- Profile Management
+
+Product Service
+- Product Listing
+- Search
+- Inventory
+
+C. Database Per Service
+
+Example:
+
+User Service → MySQL
+Product Service → MongoDB
+Order Service → PostgreSQL
+
+----------------------------------------------------
+
+5. Communication Between Services
+
+A. Synchronous Communication
+Direct request-response communication.
+
+Example:
+Service A → REST API → Service B
+
+Technologies:
+- REST API
+- HTTP
+- gRPC
+
+B. Asynchronous Communication
+Uses message brokers.
+
+Example:
+Service A → Queue → Service B
+
+Technologies:
+- Apache Kafka
+- RabbitMQ
+
+----------------------------------------------------
+
+6. Advantages
+
+- Independent Deployment
+- Better Scalability
+- Faster Development
+- Fault Isolation
+- Technology Flexibility
+- Easy Maintenance
+
+----------------------------------------------------
+
+7. Disadvantages
+
+- More Complex Infrastructure
+- Difficult Monitoring
+- Network Delays
+- Data Consistency Challenges
+- Deployment Complexity
+
+----------------------------------------------------
+
+8. Monolithic vs Microservices
+
+Monolithic:
+- Single Deployment
+- Shared Database
+- Hard to Scale
+
+Microservices:
+- Independent Deployment
+- Separate Databases
+- Easy Scaling
+
+----------------------------------------------------
+
+9. Technologies Used
+
+Backend:
+- Java Spring Boot
+- Node.js
+- Express.js
+- .NET
+- Go
+
+Containerization:
+- Docker
+- Kubernetes
+
+Cloud:
+- AWS
+- Azure
+- GCP
+
+Monitoring:
+- Prometheus
+- Grafana
+
+----------------------------------------------------
+
+10. Example Workflow
+
+User Places Order
+      |
+      V
+Order Service
+      |
+      V
+Payment Service
+      |
+      V
+Inventory Service
+      |
+      V
+Notification Service
+      |
+      V
+Order Completed
+
+----------------------------------------------------
+
+11. When to Use Microservices
+
+Use:
+- Large applications
+- Multiple development teams
+- High scalability requirements
+- Independent deployment
+
+Avoid:
+- Small projects
+- MVPs
+- Simple CRUD applications
+
+----------------------------------------------------
+
+Conclusion:
+Microservices Architecture helps build scalable, maintainable, and cloud-ready applications by breaking a large application into smaller independent services.
