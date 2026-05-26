@@ -1,0 +1,425 @@
+KUBERNETES (K8s) COMPLETE NOTES
+
+1. INTRODUCTION
+
+Kubernetes (K8s) is an open-source container orchestration platform used to automate deployment, scaling, management, and monitoring of containerized applications.
+
+Container = Package containing:
+
+* Application code
+* Dependencies
+* Runtime
+
+Kubernetes manages containers across multiple servers.
+
+Developed by Google and maintained by Cloud Native Computing Foundation (CNCF).
+
+---
+
+2. WHY KUBERNETES?
+
+Problems without Kubernetes:
+
+* Manual deployment
+* Difficult scaling
+* Server failures
+* Downtime
+* Complex infrastructure
+
+Advantages:
+
+* Automatic deployment
+* Auto scaling
+* Load balancing
+* Self healing
+* Rolling updates
+* High availability
+
+---
+
+3. KUBERNETES ARCHITECTURE
+
+Kubernetes Cluster
+
+Control Plane
+|
+|-- API Server
+|-- Scheduler
+|-- Controller Manager
+|-- etcd
+
+Worker Nodes
+|
+|-- Kubelet
+|-- Container Runtime
+|-- Pods
+
+---
+
+4. CONTROL PLANE COMPONENTS
+
+API Server
+
+* Entry point of Kubernetes
+* Accepts kubectl requests
+* Communicates with cluster
+
+Command:
+kubectl get pods
+
+Scheduler
+
+* Assigns Pods to worker nodes
+* Decides where applications run
+
+Controller Manager
+
+* Maintains desired cluster state
+* Creates new Pods if failed
+
+etcd
+
+* Distributed database
+* Stores cluster information
+
+---
+
+5. WORKER NODE COMPONENTS
+
+Kubelet
+
+* Node agent
+* Communicates with Control Plane
+
+Container Runtime
+
+* Runs containers
+
+Examples:
+Docker
+containerd
+CRI-O
+
+Pods
+
+* Smallest deployable unit
+
+---
+
+6. POD
+
+Pod = Smallest Kubernetes object.
+
+Contains:
+
+* One or more containers
+* Shared network
+* Shared storage
+
+Example:
+
+apiVersion: v1
+kind: Pod
+
+metadata:
+name: app
+
+spec:
+containers:
+
+* name: nginx
+  image: nginx
+
+Commands:
+
+kubectl get pods
+
+kubectl describe pod pod-name
+
+kubectl logs pod-name
+
+---
+
+7. REPLICASET
+
+Maintains desired number of Pods.
+
+Example:
+
+Desired Pods = 3
+
+One Pod fails
+
+ReplicaSet creates new Pod
+
+---
+
+8. DEPLOYMENT
+
+Deployment manages ReplicaSets.
+
+Features:
+
+* Scaling
+* Updates
+* Rollback
+
+Example:
+
+apiVersion: apps/v1
+
+kind: Deployment
+
+spec:
+replicas: 3
+
+Commands:
+
+kubectl get deployment
+
+kubectl rollout restart deployment app
+
+---
+
+9. SERVICES
+
+Service exposes Pods.
+
+Types:
+
+ClusterIP
+
+* Internal communication
+
+NodePort
+
+* Access externally
+
+Example:
+NodeIP:30000
+
+LoadBalancer
+
+* Cloud external access
+
+Command:
+
+kubectl get svc
+
+---
+
+10. INGRESS
+
+Ingress manages HTTP/HTTPS traffic.
+
+Flow:
+
+Browser
+↓
+Ingress
+↓
+Service
+↓
+Pod
+
+Install:
+
+helm repo add ingress-nginx [https://kubernetes.github.io/ingress-nginx](https://kubernetes.github.io/ingress-nginx)
+
+helm install ingress-nginx ingress-nginx/ingress-nginx
+
+Example:
+
+apiVersion: networking.k8s.io/v1
+
+kind: Ingress
+
+spec:
+ingressClassName: nginx
+
+rules:
+
+* http:
+  paths:
+
+  * path: /
+
+---
+
+11. CONFIGMAP
+
+Stores configuration.
+
+Example:
+
+PORT=3000
+
+Create:
+
+kubectl create configmap app-config
+
+---
+
+12. SECRET
+
+Stores sensitive information.
+
+Example:
+
+PASSWORD=*****
+
+Create:
+
+kubectl create secret generic db-secret
+
+---
+
+13. PERSISTENT VOLUME
+
+Persistent storage independent from Pods.
+
+Flow:
+
+PVC
+↓
+PV
+↓
+Storage
+
+Commands:
+
+kubectl get pv
+
+kubectl get pvc
+
+---
+
+14. KUBERNETES WORKFLOW
+
+Developer
+↓
+Docker Build
+↓
+Docker Image
+↓
+Registry
+↓
+Kubernetes
+↓
+Pods
+
+---
+
+15. DOCKER + KUBERNETES + AWS EKS
+
+Code
+↓
+Docker
+↓
+Image
+↓
+ECR
+↓
+EKS
+↓
+Users
+
+Docker = Containerization
+
+ECR = Store images
+
+EKS = Managed Kubernetes
+
+---
+
+16. SCALING
+
+Manual:
+
+kubectl scale deployment app --replicas=5
+
+Automatic:
+
+HPA
+(Horizontal Pod Autoscaler)
+
+---
+
+17. ROLLING UPDATE
+
+Update application without downtime.
+
+Command:
+
+kubectl rollout restart deployment app
+
+Flow:
+
+Old Pods
+↓
+New Pods
+↓
+Traffic Shift
+
+---
+
+18. IMPORTANT COMMANDS
+
+Cluster:
+
+kubectl cluster-info
+
+Nodes:
+
+kubectl get nodes
+
+Pods:
+
+kubectl get pods
+
+Services:
+
+kubectl get svc
+
+Ingress:
+
+kubectl get ingress
+
+Apply:
+
+kubectl apply -f file.yaml
+
+Delete:
+
+kubectl delete -f file.yaml
+
+Logs:
+
+kubectl logs pod-name
+
+---
+
+19. INTERVIEW QUESTIONS
+
+20. What is Kubernetes?
+
+21. Difference between Pod and Deployment?
+
+22. What is ReplicaSet?
+
+23. Explain Service types.
+
+24. What is Ingress?
+
+25. What is ConfigMap?
+
+26. What is Secret?
+
+27. What is etcd?
+
+28. Explain Kubernetes architecture.
+
+29. Difference between Docker and Kubernetes?
+
+---
+
